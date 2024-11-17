@@ -20,9 +20,7 @@ function App() {
     {
       path: "/",
       element: (
-        <ProtectedRoutes user={us}>
           <RootLayout />
-        </ProtectedRoutes>
       ),
       children: [
         {
