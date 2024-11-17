@@ -3,6 +3,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
+import { useState } from "react";
 import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import UserList from "./components/UserList";
@@ -12,13 +13,14 @@ import Login from "./pages/Login";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 
 function App() {
-  const user = true;
-
+  const [user, setUsers] = useState(null);
+  const us = JSON.parse(localStorage.getItem("user"));
+  console.log(us);
   const route = createBrowserRouter([
     {
       path: "/",
       element: (
-        <ProtectedRoutes user={user}>
+        <ProtectedRoutes user={us}>
           <RootLayout />
         </ProtectedRoutes>
       ),
@@ -43,7 +45,7 @@ function App() {
     },
     {
       path: "login",
-      element: user ? <Navigate to={"/"} /> : <Login />,
+      element: us ? <Navigate to={"/"} /> : <Login setUsers={setUsers} />,
     },
   ]);
 

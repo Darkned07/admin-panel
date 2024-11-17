@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-function Login() {
+function Login({ setUsers }) {
   const [user, setUser] = useState(null);
+
+
   useEffect(() => {
     fetch("http://localhost:3000/auth")
       .then((data) => data.json())
@@ -18,8 +20,9 @@ function Login() {
     user.filter((us) => {
       if (us.name === name) {
         if (us.password === password) {
-          console.log("salom ");
-          
+  localStorage.setItem("user", JSON.stringify(us));
+
+          setUsers(us);
         } else {
           toast.error("Parolingiz xatolik!");
         }
@@ -27,8 +30,6 @@ function Login() {
         toast.error("username xato kiritildi!");
       }
     });
-
-    
   };
 
   return (
