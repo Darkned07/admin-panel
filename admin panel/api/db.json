@@ -1,0 +1,9 @@
+{
+  "apis": [],
+  "auth": [
+    {
+      "name": "logan",
+      "password": "1234"
+    }
+  ]
+}
