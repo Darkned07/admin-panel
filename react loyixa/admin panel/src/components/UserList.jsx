@@ -11,6 +11,7 @@ function UserList() {
       .then((data) => setUser(data))
       .catch((err) => console.log(err));
   }, [id]);
+  
   return (
     <div className="">
       <div className="card bg-base-100 lg:max-w-[700px] shadow-xl">

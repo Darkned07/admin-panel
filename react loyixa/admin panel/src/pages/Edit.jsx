@@ -181,6 +181,8 @@ function Edit() {
                 ></textarea>
               </label>
 
+              <div ></div>
+
               <button type="submit" className="btn btn-sm btn-outline">
                 Kasalni Malumotlarini yangilash
               </button>
