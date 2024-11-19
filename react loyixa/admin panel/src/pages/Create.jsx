@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Create() {
   const link = useNavigate();
   const createUser = async (user) => {
-    fetch("https://dad-urolog.uz/api/apiadmin/creatediagnos/", {
+    fetch("https://dad-urolog.uz/api/apiadmin/get_all_patients_view_id/", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -38,21 +38,36 @@ function Create() {
     const diseases = e.target.diseases.value;
     const medical_history = e.target.medical_history.value;
     const medications = e.target.medications.value;
-
+    console.log({
+      first_name,
+      last_name,
+      phone,
+      address,
+      allergies,
+      birth_date,
+      blood_group,
+      diseases,
+      medical_history,
+      medications,
+    });
     if (first_name.length >= 3) {
       if (phone.length >= 9) {
-        createUser({
-          first_name,
-          last_name,
-          phone,
-          address,
-          allergies,
-          birth_date,
-          blood_group,
-          diseases,
-          medical_history,
-          medications,
-        });
+        if (birth_date) {
+          createUser({
+            first_name,
+            last_name,
+            phone,
+            address,
+            allergies,
+            birth_date,
+            blood_group,
+            diseases,
+            medical_history,
+            medications,
+          });
+        } else {
+          toast.error("Iltimos tug'ilgan sanasini kiriting");
+        }
       } else {
         toast.error("Telefon raqam kamida 9ta harfdan iborat bo'lishi kerak!");
       }

@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
-function TabPhList({ lists }) {
+function TabPhList({ lists, setDel }) {
   const navigate = useNavigate();
   const deleteUser = (id) => {
     fetch("https://dad-urolog.uz/api/apiadmin/patient_view/" + id, {
       method: "DELETE",
+      mode: "cors",
     })
-      .then((data) => data.json())
       .then((data) => {
-        navigate("/create");
-        toast.success("Kasal bazadan o'chirib yuborildi :)");
+        setDel(data);
+        toast.success("Bemor bazadan o'chirib yuborildi :)");
       })
       .catch((err) => {
         toast.error(
@@ -20,71 +20,55 @@ function TabPhList({ lists }) {
         console.log(err);
       });
   };
-
+  console.log(lists);
   return (
-    <div>
-      <div className="max-w-[300px] sm:max-w-[500px] md:max-w-[700px] w-[full] lg:max-w-[650px] max-container mt-[20px] overflow-scroll max-h-[600px] ">
-        <div className="">
-          <table className="table table-md table-pin-rows table-pin-cols  ">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <td>Ismi</td>
-                <td>Telefon Raqami</td>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {!lists && (
-                <tr>
-                  <td></td>
-                  <td>Xozir</td>
-                  <td>Kasallar</td>
-                  <td>Mavjud</td>
-                  <td>Emas</td>
-                  <td></td>
+    <div className="w-full lg:max-w-[600px] overflow-scroll h-[600px]">
+      <table className="min-w-full divide-y divide-gray-200 ">
+        <thead>
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Id
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Ismi
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Telefon Raqami
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              others
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {lists &&
+            lists.map((list) => {
+              return (
+                <tr key={list.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{list.id}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{list.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{list.phone}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Link
+                      to={`/edit/${list.id}`}
+                      className="px-2 py-1 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out"
+                    >
+                      s
+                    </Link>
+                    <button
+                      onClick={(e) => {
+                        deleteUser(list.id);
+                      }}
+                      className="ml-2 px-2 py-1 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out"
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
-              )}
-              {lists &&
-                lists.map((list) => {
-                  return (
-                    <tr className="border-[2px]" key={list.id}>
-                      <th className="border-[1px] ">{list.id}</th>
-                      <td>{list.name}</td>
-                      <td>{list.phone}</td>
-
-                      <td className="flex flex-col gap-[2px]">
-                        <Link
-                          className="py-1 px-1 border-[2px] text-green-800 bg-gray-300"
-                          to={`/kasal/${list.id}`}
-                        >
-                          Davomi
-                        </Link>
-                        <button
-                          onClick={(e) => {
-                            deleteUser(list.id);
-                          }}
-                          className="py-1 px-1 border-[2px] text-green-300 bg-slate-700"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>ID</th>
-                <td>Ismi</td>
-                <td>Telefon Raqami</td>
-
-                <th></th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
+              );
+            })}
+        </tbody>
+      </table>
     </div>
   );
 }
