@@ -77,7 +77,7 @@ function Create() {
   };
 
   return (
-    <div className=" mt-[20px] lg:mt-[50px] flex flex-col gap-[20px] items-center justify-between">
+    <div className=" mt-[20px] mb-[10px] lg:mt-[50px] flex flex-col gap-[20px] items-center justify-between">
       <h2 className="text-[15px] font-bold font-mono text-slate-900">
         Yangi Kasalni qo'shish
       </h2>

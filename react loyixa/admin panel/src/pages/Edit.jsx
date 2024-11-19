@@ -73,7 +73,7 @@ function Edit() {
   };
 
   return (
-    <div className=" mt-[20px] lg:mt-[50px] flex flex-col mx-auto gap-[20px] items-center max-w-[700px]  lg:max-w-[500px] justify-center">
+    <div className=" mt-[20px] mb-[10px] lg:mt-[50px] flex flex-col mx-auto gap-[20px] items-center max-w-[700px]  lg:max-w-[500px] justify-center">
       <h2 className="text-[15px] font-bold font-mono text-slate-900">
         Yangi Kasalni o'zgartirish
       </h2>

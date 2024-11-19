@@ -23,7 +23,7 @@ function TabPhList({ lists, setDel }) {
   };
   console.log(lists);
   return (
-    <div className=" razmer mx-auto overflow-scroll mt-[10px] ">
+    <div className=" razmer mx-auto overflow-scroll mt-[10px]  mb-[10px]">
       <table className="min-w-full divide-y divide-gray-200 ">
         <thead className="">
           <tr className="">
