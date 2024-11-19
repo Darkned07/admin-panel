@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 function TabPhList({ lists }) {
   const navigate = useNavigate();
   const deleteUser = (id) => {
-    fetch("http://localhost:3000/apis/" + id, {
+    fetch("https://dad-urolog.uz/api/apiadmin/patient_view/" + id, {
       method: "DELETE",
     })
       .then((data) => data.json())
@@ -30,15 +30,12 @@ function TabPhList({ lists }) {
               <tr>
                 <th>ID</th>
                 <td>Ismi</td>
-                <td>Familyasi</td>
-                <td>Yoshi</td>
-                <td>kasal nomi</td>
-                <td>Ro'yxatdan o'tgan sana</td>
+                <td>Telefon Raqami</td>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {lists.length < 1 && (
+              {!lists && (
                 <tr>
                   <td></td>
                   <td>Xozir</td>
@@ -48,16 +45,14 @@ function TabPhList({ lists }) {
                   <td></td>
                 </tr>
               )}
-              {lists.length >= 1 &&
+              {lists &&
                 lists.map((list) => {
                   return (
                     <tr className="border-[2px]" key={list.id}>
                       <th className="border-[1px] ">{list.id}</th>
-                      <td>{list.ismi}</td>
-                      <td>{list.famil}</td>
-                      <td>{list.age}</td>
-                      <td>{list.kasal.slice(0, 10)}...</td>
-                      <td>{list.reg_time}</td>
+                      <td>{list.name}</td>
+                      <td>{list.phone}</td>
+
                       <td className="flex flex-col gap-[2px]">
                         <Link
                           className="py-1 px-1 border-[2px] text-green-800 bg-gray-300"
@@ -82,10 +77,8 @@ function TabPhList({ lists }) {
               <tr>
                 <th>ID</th>
                 <td>Ismi</td>
-                <td>Familyasi</td>
-                <td>Yoshi</td>
-                <td>kasal nomi</td>
-                <td>Ro'yxatdan o'tgan sana</td>
+                <td>Telefon Raqami</td>
+
                 <th></th>
               </tr>
             </tfoot>

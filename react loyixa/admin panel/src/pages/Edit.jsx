@@ -8,7 +8,7 @@ function Edit() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/apis/" + id)
+    fetch("https://dad-urolog.uz/api/apiadmin/patient_view/" + id)
       .then((data) => data.json())
       .then((data) => setUser(data))
       .catch((err) => {
@@ -19,7 +19,7 @@ function Edit() {
   }, [id]);
 
   const updateUser = async (user) => {
-    fetch("http://localhost:3000/apis/" + id, {
+    fetch("https://dad-urolog.uz/api/apiadmin/patient_view/" + id, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -38,24 +38,35 @@ function Edit() {
         );
       });
   };
-
+  console.log(user && user.data);
   const formSubmit = (e) => {
     e.preventDefault();
 
-    const ismi = e.target.ism.value;
-    const famil = e.target.fam.value;
-    const age = e.target.age.value;
-    const gender = e.target.gender.value;
-    const reg_time = e.target.date.value;
-    const kasal = e.target.kasal.value;
+    const first_name = e.target.first_name.value;
+    const last_name = e.target.last_name.value;
+    const phone = e.target.phone.value;
+    const address = e.target.address.value;
+    const allergies = e.target.allergies.value;
+    const birth_date = e.target.birth_date.value;
+    const blood_group = e.target.blood_group.value;
+    const diseases = e.target.diseases.value;
+    const medical_history = e.target.medical_history.value;
+    const medications = e.target.medications.value;
 
     const us = {
-      ismi: ismi.length >= 3 ? ismi : user.ismi,
-      famil: famil.length >= 3 ? famil : user.famil,
-      age: age.length >= 1 ? age : user.age,
-      gender: gender ? gender : user.gender,
-      reg_time: reg_time ? reg_time : user.reg_time,
-      kasal: kasal.length > 5 ? kasal : user.kasal,
+      first_name: first_name.length >= 1 ? first_name : user.data.first_name,
+      last_name: last_name.length >= 1 ? last_name : user.data.last_name,
+      phone: phone.length >= 1 ? phone : user.data.phone,
+      address: address ? address : user.data.address,
+      birth_date: birth_date ? birth_date : user.data.birth_date,
+      allergies: allergies.length > 1 ? allergies : user.data.allergies,
+      blood_group: blood_group.length > 1 ? blood_group : user.data.blood_group,
+      diseases: diseases.length > 1 ? diseases : user.data.diseases,
+      medical_history:
+        medical_history.length > 1
+          ? medical_history
+          : user.data.medical_history,
+      medications: medications.length > 1 ? medications : user.data.medications,
     };
 
     updateUser(us);
@@ -67,65 +78,111 @@ function Edit() {
         Yangi Kasalni o'zgartirish
       </h2>
       {user && (
-        <form onSubmit={formSubmit} className="max-w-[700px] border-2  rounded-md p-4 "  method="POST" action="/">
+        <form
+          onSubmit={formSubmit}
+          className="max-w-[700px] border-2  rounded-md p-4 "
+          method="POST"
+          action="/"
+        >
           <div className="flex flex-col gap-[10px]">
-            <span>kasalning ismi:{user.ismi}</span>
-            <input
-              type="text"
-              className="input input-bordered border-green-700 shadow-lg input-sm w-full"
-              name="ism"
-              placeholder="Kasalning ismi "
-            />
-            <span>Kasalning familyasi: {user.famil}</span>
-            <input
-              type="text"
-              className="input input-bordered border-green-700 shadow-lg input-sm w-full"
-              name="fam"
-              placeholder="Kasalning Familyasi "
-            />
-            <span>Kasalning yoshi: {user.age}</span>
-            <input
-              type="number"
-              className="input input-bordered border-green-700 shadow-lg input-sm w-full"
-              name="age"
-              placeholder="Kasalning yoshi "
-            />
-            <span>Kasalning jinsi: {user.gender}</span>
-            <div className="flex flex-col gap-[10px]">
-              <h2 className="text-[15px] font-bold">Kasalning Jinsi:</h2>
-              <label
-                className="flex flex-row items-center gap-[5px]"
-                htmlFor="erk"
-              >
-                <span className="mt-[-2px] font-semibold">Erkak</span>
-                <input type="radio" value={"erkak"} name="gender" id="erk" />
-              </label>
-
-              <label
-                className="flex flex-row items-center gap-[5px]"
-                htmlFor="ay"
-              >
-                <span className="mt-[-2px] font-semibold">Ayol</span>
-                <input type="radio" value={"ayol"} name="gender" id="ay" />
-              </label>
-              <span>Kasalning ro'yxatdan o'tgan sanasi: {user.reg_time}</span>
+            <label htmlFor="" className="flex flex-col">
+              <span>Ismi: {user.data.first_name}</span>
               <input
-                type="date"
-                className="input input-bordered border-green-700 shadow-lg input-sm w-full"
-                name="date"
+                type="text"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                name="first_name"
+                placeholder="ismi "
               />
-              <span className="flex flex-col gap-[2px]">
-                Kasalning kasalligi xaqida malumoti: <p>{user.kasal}</p>
-              </span>
-              <textarea
-                name="kasal"
-                placeholder="Kasalligi to'g'risidagi malumot"
-                className="input input-bordered border-green-700 shadow-lg input-sm w-full h-[40px]"
-                id=""
-              ></textarea>
+            </label>
+            <label htmlFor="" className="flex flex-col">
+              <span>Familyasi: {user.data.last_name}</span>
+              <input
+                type="text"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                name="last_name"
+                placeholder="Familyasi "
+              />
+            </label>
+            <label htmlFor="" className="flex flex-col">
+              <span>Telefon Raqami: {user.data.phone}</span>
+              <input
+                type="number"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                name="phone"
+                placeholder="Telefon Raqami "
+              />
+            </label>
+            <div className="flex flex-col gap-[10px]">
+              <label className="flex flex-col" htmlFor="">
+                <span>Tug'ilgan sanasi: {user.data.birth_date}</span>
+                <input
+                  type="date"
+                  className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                  name="birth_date"
+                  placeholder="Tug'ilgan sanasi"
+                />
+              </label>
+              <label className="flex flex-col" htmlFor="">
+                <span>Qon gruppasi: {user.data.blood_group}</span>
+                <input
+                  type="text"
+                  className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                  name="blood_group"
+                  placeholder="Qon gruppasi"
+                />
+              </label>
+              <label htmlFor="" className="flex flex-col">
+                <span>
+                  Kasalligi to'g'risidagi malumot: {user.data.diseases}
+                </span>
+                <textarea
+                  name="diseases"
+                  placeholder="Kasalligi to'g'risidagi malumot"
+                  className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                  id=""
+                ></textarea>
+              </label>
+              <label className="flex flex-col" htmlFor="">
+                <span>
+                  Kasalning Tibbiy Tarixi: {user.data.medical_history}
+                </span>
+                <textarea
+                  name="medical_history"
+                  placeholder="Kasalning Tibbiy Tarixi"
+                  className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                  id=""
+                ></textarea>
+              </label>
+              <label className="flex flex-col" htmlFor="">
+                <span>Kasalliklari: {user.medications}</span>
+                <textarea
+                  name="medications"
+                  placeholder="Kasalliklari"
+                  className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                  id=""
+                ></textarea>
+              </label>
+              <label htmlFor="" className="flex flex-col">
+                <span>Alergiyalarini yozing: {user.data.allergies}</span>
+                <textarea
+                  name="allergies"
+                  placeholder="Alergiyalarini yozing:"
+                  className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                  id=""
+                ></textarea>
+              </label>
+              <label htmlFor="" className="flex flex-col">
+                <span>Kasalning manzili: {user.data.address}</span>
+                <textarea
+                  name="address"
+                  placeholder="Kasalning manzili"
+                  className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                  id=""
+                ></textarea>
+              </label>
 
               <button type="submit" className="btn btn-sm btn-outline">
-                Kasalni ro'yxatdan o'tkazish
+                Kasalni Malumotlarini yangilash
               </button>
             </div>
           </div>

@@ -1,10 +1,13 @@
 import React from "react";
 
-function Navbar() {
+function Navbar({ setName }) {
   return (
     <div className="navbar  bg-white text-neutral-content flex flex-row gap-[20px]">
       <label className="input max-container input-bordered max-w-[200px] sm:max-w-[500px] md:max-w-[700px] flex items-center gap-2">
         <input
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
           type="text"
           className="grow text-green-600"
           placeholder="Search"

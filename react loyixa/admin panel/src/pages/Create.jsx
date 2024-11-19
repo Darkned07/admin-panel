@@ -4,15 +4,16 @@ import { useNavigate } from "react-router-dom";
 function Create() {
   const link = useNavigate();
   const createUser = async (user) => {
-    fetch("http://localhost:3000/apis", {
+    fetch("https://dad-urolog.uz/api/apiadmin/creatediagnos/", {
       method: "POST",
       headers: {
-        "Content-type": "application/json; charset=UTF-8",
+        "Content-type": "application/json",
       },
       body: JSON.stringify(user),
     })
       .then((data) => data.json())
       .then((data) => {
+        console.log(data);
         toast.success("Kasal bazaga saqlandi :)");
         link("/");
       })
@@ -27,43 +28,33 @@ function Create() {
   const formSubmit = (e) => {
     e.preventDefault();
 
-    const ismi = e.target.ism.value;
-    const famil = e.target.fam.value;
-    const age = e.target.age.value;
-    const gender = e.target.gender.value;
-    const reg_time = e.target.date.value;
-    const kasal = e.target.kasal.value;
+    const first_name = e.target.first_name.value;
+    const last_name = e.target.last_name.value;
+    const phone = e.target.phone.value;
+    const address = e.target.address.value;
+    const allergies = e.target.allergies.value;
+    const birth_date = e.target.birth_date.value;
+    const blood_group = e.target.blood_group.value;
+    const diseases = e.target.diseases.value;
+    const medical_history = e.target.medical_history.value;
+    const medications = e.target.medications.value;
 
-    if (ismi.length >= 3) {
-      if (famil.length >= 3) {
-        if (age.length >= 1) {
-          if (reg_time) {
-            if (gender) {
-              if (kasal.length >= 10) {
-                createUser({
-                  ismi,
-                  famil,
-                  age,
-                  gender,
-                  reg_time,
-                  kasal,
-                });
-              } else {
-                toast.error(
-                  "Kasallik to'grisidagi malumotni iltimos to'liqroq yozing!"
-                );
-              }
-            } else {
-              toast.error("Jinsi kiritilishi kerak!");
-            }
-          } else {
-            toast.error("Sana kiritilishi kerak!");
-          }
-        } else {
-          toast.error("Yosh kiritilishi kerak!");
-        }
+    if (first_name.length >= 3) {
+      if (phone.length >= 9) {
+        createUser({
+          first_name,
+          last_name,
+          phone,
+          address,
+          allergies,
+          birth_date,
+          blood_group,
+          diseases,
+          medical_history,
+          medications,
+        });
       } else {
-        toast.error("Familya kamida 3ta harfdan iborat bo'lishi kerak!");
+        toast.error("Telefon raqam kamida 9ta harfdan iborat bo'lishi kerak!");
       }
     } else {
       toast.error("Ism kamida 3ta harfdan ko'proq bolishi kerak!");
@@ -78,53 +69,96 @@ function Create() {
 
       <form onSubmit={formSubmit} method="POST" action="/">
         <div className="flex flex-col gap-[10px]">
-          <input
-            type="text"
-            className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
-            name="ism"
-            placeholder="Kasalning ismi "
-          />
-          <input
-            type="text"
-            className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
-            name="fam"
-            placeholder="Kasalning Familyasi "
-          />
-          <input
-            type="number"
-            className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
-            name="age"
-            placeholder="Kasalning yoshi "
-          />
-          <div className="flex flex-col gap-[10px]">
-            <h2 className="text-[15px] font-bold">Kasalning Jinsi:</h2>
-            <label
-              className="flex flex-row items-center gap-[5px]"
-              htmlFor="erk"
-            >
-              <span className="mt-[-2px] font-semibold">Erkak</span>
-              <input type="radio" value={"erkak"} name="gender" id="erk" />
-            </label>
-
-            <label
-              className="flex flex-row items-center gap-[5px]"
-              htmlFor="ay"
-            >
-              <span className="mt-[-2px] font-semibold">Ayol</span>
-              <input type="radio" value={"ayol"} name="gender" id="ay" />
-            </label>
+          <label htmlFor="" className="flex flex-col">
+            <span>Ismi:</span>
             <input
-              type="date"
+              type="text"
               className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
-              name="date"
+              name="first_name"
+              placeholder="Kasalning ismi "
             />
-            <textarea
-              name="kasal"
-              placeholder="Kasalligi to'g'risidagi malumot"
+          </label>
+          <label htmlFor="" className="flex flex-col">
+            <span>Familyasi</span>
+            <input
+              type="text"
               className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
-              id=""
-            ></textarea>
-
+              name="last_name"
+              placeholder="Kasalning Familyasi "
+            />
+          </label>
+          <label htmlFor="" className="flex flex-col">
+            <input
+              type="number"
+              className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+              name="phone"
+              placeholder="Kasalning Telefon Raqami "
+            />
+          </label>
+          <div className="flex flex-col gap-[10px]">
+            <label className="flex flex-col" htmlFor="">
+              <span>Tug'ilgan sanasi:</span>
+              <input
+                type="date"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                name="birth_date"
+                placeholder="Tug'ilgan sanasi"
+              />
+            </label>
+            <label className="flex flex-col" htmlFor="">
+              <span>Qon gruppasi:</span>
+              <input
+                type="text"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                name="blood_group"
+                placeholder="Qon gruppasi"
+              />
+            </label>
+            <label htmlFor="" className="flex flex-col">
+              <span>Kasalligi to'g'risidagi malumot:</span>
+              <textarea
+                name="diseases"
+                placeholder="Kasalligi to'g'risidagi malumot"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                id=""
+              ></textarea>
+            </label>
+            <label className="flex flex-col" htmlFor="">
+              <span>Kasalning Tibbiy Tarixi</span>
+              <textarea
+                name="medical_history"
+                placeholder="Kasalning Tibbiy Tarixi"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                id=""
+              ></textarea>
+            </label>
+            <label className="flex flex-col" htmlFor="">
+              <span>Kasalliklari</span>
+              <textarea
+                name="medications"
+                placeholder="Kasalliklari"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                id=""
+              ></textarea>
+            </label>
+            <label htmlFor="" className="flex flex-col">
+              <span>Alergiyalarini yozing:</span>
+              <textarea
+                name="allergies"
+                placeholder="Alergiyalarini yozing:"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                id=""
+              ></textarea>
+            </label>
+            <label htmlFor="" className="flex flex-col">
+              <span>Kasalning manzili</span>
+              <textarea
+                name="address"
+                placeholder="Kasalning manzili"
+                className="input input-bordered border-green-700 shadow-lg input-sm w-[300px]"
+                id=""
+              ></textarea>
+            </label>
             <button type="submit" className="btn btn-sm btn-outline">
               Kasalni ro'yxatdan o'tkazish
             </button>

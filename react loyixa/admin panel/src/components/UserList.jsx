@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 
 function UserList() {
   const [user, setUser] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:3000/apis/" + id)
+    fetch("https://dad-urolog.uz/api/apiadmin/patient_view/" + id)
       .then((data) => data.json())
       .then((data) => setUser(data))
       .catch((err) => console.log(err));
   }, [id]);
-
-
   return (
     <div className="">
       <div className="card bg-base-100 lg:max-w-[700px] shadow-xl">
@@ -26,53 +24,79 @@ function UserList() {
               <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
                 Kasalning Id raqami:
                 <p className="font-mono mt-[4px] text-[16px] ">
-                  {user && user.id}
+                  {user && user.data.id}
                 </p>
-                <Link className="btn btn-sm  btn-outline" to={`/edit/${user.id}`}>yangilash</Link>
+                <Link
+                  className="btn btn-sm  btn-outline"
+                  to={`/edit/${user.data.id}`}
+                >
+                  yangilash
+                </Link>
               </span>
               <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
                 Kasalning ismi:
                 <p className="font-mono mt-[4px] text-[16px] ">
-                  {user && user.ismi}
+                  {user && user.data.first_name}
                 </p>
               </span>
               <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
                 Kasalning Familyasi:
                 <p className="font-mono mt-[4px] text-[16px] ">
-                  {user && user.famil}
+                  {user && user.data.last_name}
                 </p>
               </span>
               <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
-                Kasalning Yoshi:
+                Kasalning Telefon Raqami:
                 <p className="font-mono mt-[4px] text-[16px] ">
-                  {user && user.age}
+                  {user && user.data.phones}
                 </p>
               </span>
               <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
-                Kasalning Jinsi:
+                Kasalning Manzili:
                 <p className="font-mono mt-[4px] text-[16px] ">
-                  {user && user.gender}
+                  {user && user.data.address}
+                </p>
+              </span>
+              <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
+                Kasalning Tug'ilgan sanasi:
+                <p className="font-mono mt-[4px] text-[16px] ">
+                  {user && user.data.birth_date}
+                </p>
+              </span>
+              <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
+                Kasalning Qon gruppasi:
+                <p className="font-mono mt-[4px] text-[16px] ">
+                  {user && user.data.blood_group}
+                </p>
+              </span>
+              <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
+                Kasalliklari xaqida:
+                <p className="font-mono mt-[4px] text-[16px] ">
+                  {user && user.data.diseases}
+                </p>
+              </span>
+              <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
+                Kasalning Tibbiy Tarixi:
+                <p className="font-mono mt-[4px] text-[16px] ">
+                  {user && user.data.medical_history}
+                </p>
+              </span>
+              <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
+                Kasalning Dorilari:
+                <p className="font-mono mt-[4px] text-[16px] ">
+                  {user && user.data.medications}
                 </p>
               </span>
               <span className="flex flex-row gap-[10px] font-bold items-center justify-center">
                 Kasal ro'yxatdan o'tgan vaqt:
                 <p className="font-mono mt-[4px] text-[16px] ">
-                  {user && user.reg_time}
-                </p>
-              </span>
-              <span className="flex flex-col   gap-[10px] font-bold items-center justify-center">
-                Kasali xaqida qisqacha malumot:
-                <p className="font-mono mt-[4px] text-[16px] ">
-                  {user && user.kasal}
+                  {user && user.data.visit_date}
                 </p>
               </span>
             </div>
           )}
           {!user && (
-            <span>
-              Kasal Topilmadi yoki aloqa yaxshi emasligi uchun bazaga ulanib
-              bo'lmadi birozdan so'ng urunib ko'ring
-            </span>
+            <span className="loading mx-auto loading-bars loading-lg"></span>
           )}
         </div>
       </div>
