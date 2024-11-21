@@ -5,9 +5,7 @@ function Navbar({ setName }) {
     <div className="navbar max-container w-full mt-[10px] shadow-xl bg-white rounded-[16px] text-neutral-content flex flex-row items-center justify-between p-[16px] ">
       <label className="input w-[400px] input-sm bg-[#f4f4f4]  input-bordered flex items-center gap-2">
         <input
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+          
           type="text"
           className="grow text-green-600"
           placeholder="Qidirish"

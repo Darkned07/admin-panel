@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import TabPhList from "../components/TabPhList";
 import Jadval from "../components/Jadval";
 
 function Home() {
@@ -36,9 +35,8 @@ function Home() {
   }, [del]);
   return (
     <div className="lg:max-w-[1200px] lg:w-full">
-      <Navbar setName={setName} />
-      <Jadval users={users} setDel={setDel} />
-      {/* {users && <TabPhList lists={users.patients} setDel={setDel} />} */}
+      <Navbar  />
+      <Jadval users={users} setDel={setDel} setName={setName} />
     </div>
   );
 }

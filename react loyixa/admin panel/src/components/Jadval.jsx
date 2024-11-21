@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import toast from "react-hot-toast";
+import Tashxis from "./Tashxis";
 
-function Jadval({ users, setDel }) {
+function Jadval({ users, setDel, setName }) {
   console.log(users);
   const [mod, setMod] = useState(true);
   const deleteUser = (id) => {
@@ -52,7 +53,14 @@ function Jadval({ users, setDel }) {
           className="flex flex-wrap items-center justify-between gap-[8px]"
         >
           <label className="input w-[350px] input-sm input-bordered flex items-center gap-2">
-            <input type="text" className="grow" placeholder="Search" />
+            <input
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              type="text"
+              className="grow"
+              placeholder="Search"
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -142,16 +150,20 @@ function Jadval({ users, setDel }) {
                       </td>
 
                       <td className="w-[200px] flex flex-row gap-[7px] items-center">
-                        <button>
+                        <button
+                          onClick={() =>
+                            document.getElementById("my_modal_4").showModal()
+                          }
+                        >
                           <img src="./cret.svg" alt="" />
                         </button>
-                        <button>
+                        <Link to={`/edit/${user.id}`}>
                           <img
                             className="p-[5px] bg-[#0FED1E] rounded-[8px]"
                             src="./edit.svg"
                             alt=""
                           />
-                        </button>
+                        </Link>
                         <Link to={`/patient/${user.id}`}>
                           <img src="./see.svg" alt="" />
                         </Link>
@@ -167,6 +179,7 @@ function Jadval({ users, setDel }) {
                   );
                 })}
             </tbody>
+            <Tashxis />
           </table>
         </div>
       </div>
