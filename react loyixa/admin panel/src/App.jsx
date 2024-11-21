@@ -28,7 +28,7 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/kasal/:id",
+          path: "/patient/:id",
           element: <UserList />,
         },
         {

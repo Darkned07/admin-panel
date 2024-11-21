@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import TabPhList from "../components/TabPhList";
+import Jadval from "../components/Jadval";
 
 function Home() {
   const [name, setName] = useState(null);
@@ -33,14 +34,11 @@ function Home() {
         .catch((err) => console.log(err));
     }
   }, [del]);
-
   return (
     <div className="lg:max-w-[1200px] lg:w-full">
       <Navbar setName={setName} />
-      {users && <TabPhList lists={users.patients} setDel={setDel} />}
-      {!users && (
-        <span className="loading flex items-center justify-center mx-auto loading-bars loading-lg"></span>
-      )}
+      <Jadval users={users} setDel={setDel} />
+      {/* {users && <TabPhList lists={users.patients} setDel={setDel} />} */}
     </div>
   );
 }
