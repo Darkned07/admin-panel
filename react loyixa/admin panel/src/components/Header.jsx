@@ -3,58 +3,72 @@ import { Link } from "react-router-dom";
 
 function Header() {
   const lists = [
-    { id: 1, name: "Bosh Sahifa", href: "/" },
-    { id: 2, name: "Yangi Kasal qo'shish", href: "create" },
+    { id: 1, name: "Bosh Sahifa", href: "/", img: "./home.svg" },
+    { id: 2, name: "Bemorlar", href: "create", img: "./bemor.svg" },
   ];
 
   return (
-    <div className="w-full">
-      <div className="drawer hidden lg:block  lg:drawer-open">
+    <div className="w-full ">
+      <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col  items-center justify-center">
+        <div className="drawer-content hidden  lg:flex flex-col items-center justify-center">
           {/* Page content here */}
           <label
             htmlFor="my-drawer-2"
-            className="btn btn-secondary mt-[16px] btn-sm text-[14px] lg:hidden"
+            className="btn btn-primary drawer-button lg:hidden"
           >
-            <svg
-              viewBox="0 0 700 1000"
-              fill="currentColor"
-              height="25px"
-              width="20px"
-            >
-              <path d="M650 450c14.667 0 26.667 5 36 15 9.333 10 14 21.667 14 35 0 13.333-5 25-15 35s-21.667 15-35 15H50c-13.333 0-25-5-35-15S0 513.333 0 500c0-13.333 4.667-25 14-35s21.333-15 36-15h600M50 350c-13.333 0-25-5-35-15S0 313.333 0 300c0-13.333 4.667-25 14-35s21.333-15 36-15h600c14.667 0 26.667 5 36 15 9.333 10 14 21.667 14 35 0 13.333-5 25-15 35s-21.667 15-35 15H50m600 300c14.667 0 26.667 5 36 15 9.333 10 14 21.667 14 35 0 13.333-5 25-15 35s-21.667 15-35 15H50c-13.333 0-25-5-35-15S0 713.333 0 700c0-13.333 4.667-25 14-35s21.333-15 36-15h600" />
-            </svg>
+            Open drawer
           </label>
         </div>
-
-        {/* width /sm/md/lg/2xl */}
-        <div className="drawer-side ">
+        <div className="drawer-side">
           <label
             htmlFor="my-drawer-2"
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu flex flex-col gap-[5px] bg-orange-300 text-base-content min-h-full w-80 p-4">
-            {/* Sidebar content here */}
-            {lists.map((list) => {
-              return (
-                <li key={list.id}>
-                  <Link
-                    className=" font-mono text-[18px] text-white hover:text-black hover:bg-white border-[2px] "
-                    to={list.href}
-                  >
-                    {list.name}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="menu bg-[#288994] rounded-[24px] text-base-content min-h-full w-80 p-4">
+            <div>
+              <Link to={"/"}>
+                <img src="./logo.svg" alt="" />
+              </Link>
+              <hr className="w-full mt-[10px] border-[#0000001A]" />
+              <details className="collapse bg-[#3DACB9] mt-[30px]">
+                <summary className="collapse-title ">
+                  <div className="flex flex-row gap-[10px] items-center">
+                  <img src="./dash.svg" alt="" className="p-[8px] bg-white rounded-[6px]" />
+                    <span className="font-semibold text-[#FAFAFA] font-mono text-[16px]">Dashboard</span>
+                  </div>
+                </summary>
+                <div className="collapse-content">
+                  <p>content</p>
+                </div>
+              </details>
+              <ul className="mt-[10px] flex flex-col gap-[12px] p-[8px] text-[#E2FCFF] text-[16px] font-semibold">
+                {lists.map((list) => {
+                  return (
+                    <li className="" key={list.id}>
+                      <Link
+                        to={list.href}
+                        className="flex flex-row items-center gap-[10px]"
+                      >
+                        <img
+                          className="bg-white p-[8px] rounded-[6px]"
+                          src={list.img}
+                          alt=""
+                        />
+                        {list.name}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* 2 header */}
-      <div className="navbar max-container w-full  lg:hidden block">
+      <div className="navbar max-container w-full  lg:hidden block ">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -73,6 +87,7 @@ function Header() {
                 />
               </svg>
             </div>
+
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
