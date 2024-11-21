@@ -27,7 +27,7 @@ function Jadval({ users, setDel, setName }) {
   };
 
   return (
-    <div className="max-conatiner flex flex-col gap-[18px]  mt-[16px] bg-[#FFF8F8] p-[16px] rounded-[16px]">
+    <div className=" flex flex-col gap-[18px]  mt-[16px] bg-[#FFF8F8] p-[16px] rounded-[16px]">
       {/* page boshi */}
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-[#000] font-mono text-[36px] font-semibold">
@@ -146,8 +146,8 @@ function Jadval({ users, setDel, setName }) {
                         <span className="ml-[5px]">
                           {user.visit_date.slice(0, 10)}
                         </span>
-                        <span className="ml-[5px]">
-                          {user.visit_date.slice(11, 19)}
+                        <span className="ml-[5px] text-[#1E40AD]">
+                          {user.visit_date.slice(11, 16)}
                         </span>
                       </td>
 

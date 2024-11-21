@@ -11,6 +11,8 @@ import Create from "./pages/Create";
 import Edit from "./pages/Edit";
 import Login from "./pages/Login";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import Bemorlar from "./pages/Bemorlar";
+import Patient from "./components/Patient";
 
 function App() {
   const [user, setUsers] = useState(null);
@@ -19,9 +21,7 @@ function App() {
   const route = createBrowserRouter([
     {
       path: "/",
-      element: (
-          <RootLayout />
-      ),
+      element: <RootLayout />,
       children: [
         {
           index: true,
@@ -29,7 +29,7 @@ function App() {
         },
         {
           path: "/patient/:id",
-          element: <UserList />,
+          element: <Patient/>,
         },
         {
           path: "create",
@@ -38,6 +38,10 @@ function App() {
         {
           path: "/edit/:id",
           element: <Edit />,
+        },
+        {
+          path: "bemorlar",
+          element: <Bemorlar />,
         },
       ],
     },

@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 function Header() {
   const lists = [
     { id: 1, name: "Bosh Sahifa", href: "/", img: "./home.svg" },
-    { id: 2, name: "Bemorlar", href: "create", img: "./bemor.svg" },
+    { id: 2, name: "Bemorlar", href: "bemorlar", img: "./bemor.svg" },
   ];
 
   return (
-    <div className="w-full ">
+    <div className="w-full h-[100%]">
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content hidden  lg:flex flex-col items-center justify-center">

@@ -2,7 +2,7 @@ import React from "react";
 
 function Navbar({ setName }) {
   return (
-    <div className="navbar max-container w-full mt-[10px] shadow-xl bg-white rounded-[16px] text-neutral-content flex flex-row items-center justify-between p-[16px] ">
+    <div className=" max-container w-full mt-[10px] shadow-xl bg-white rounded-[16px] text-neutral-content flex flex-row items-center justify-between p-[16px] ">
       <label className="input w-[400px] input-sm bg-[#f4f4f4]  input-bordered flex items-center gap-2">
         <input
           
