@@ -1,6 +1,45 @@
 import React from "react";
+import toast from "react-hot-toast";
 
-function Tashxis() {
+function Tashxis({ idTash, setDel, setModals }) {
+  const url = "https://dad-urolog.uz/api/apiadmin/creatediagnos/";
+  const createDiagnos = (diagnoz) => {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(diagnoz),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        toast.success("Tashxis qo'yildi :)");
+        console.log(data);
+        setDel(data);
+        setModals(false)
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const tashxisForm = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const description = e.target.description.value;
+    const complaints = e.target.complaints.value;
+    const patient_id = idTash;
+
+    if (name.length > 3) {
+      createDiagnos({
+        name,
+        description,
+        complaints,
+        patient_id,
+      });
+    } else {
+      toast.error("Tashxis nomi kiritilmadi!");
+    }
+  };
+
   return (
     <div>
       <dialog id="my_modal_4" className="modal">
@@ -15,7 +54,11 @@ function Tashxis() {
             Tashxislash
           </h3>
           <hr className="w-full h-[1px] mt-[20px] bg-[#E4E4E4]" />
-          <form action="" className="flex flex-col gap-[10px]">
+          <form
+            onSubmit={tashxisForm}
+            action=""
+            className="flex flex-col gap-[10px]"
+          >
             <label className="form-control w-full max-w-full">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
@@ -24,6 +67,7 @@ function Tashxis() {
               </div>
               <input
                 type="text"
+                name="name"
                 className="input input-bordered w-full max-w-full"
               />
             </label>
@@ -33,7 +77,10 @@ function Tashxis() {
                   Shikoyatlar
                 </span>
               </div>
-              <textarea className="textarea textarea-bordered h-24"></textarea>
+              <textarea
+                name="complaints"
+                className="textarea textarea-bordered h-24"
+              ></textarea>
             </label>
             <label className="form-control">
               <div className="label">
@@ -41,11 +88,17 @@ function Tashxis() {
                   Tashxis matni
                 </span>
               </div>
-              <textarea className="textarea textarea-bordered h-24"></textarea>
+              <textarea
+                name="description"
+                className="textarea textarea-bordered h-24"
+              ></textarea>
             </label>
             <div className="flex flex-row items-center ml-auto gap-[5px]">
               <form method="dialog">
-                <button className="py-[12px] px-[20px] rounded-[8px] bg-[#E0E0E0] text-[#565656] font-mono text-[16px] font-semibold ">
+                <button
+                  type="button"
+                  className="py-[12px] px-[20px] rounded-[8px] bg-[#E0E0E0] text-[#565656] font-mono text-[16px] font-semibold "
+                >
                   Bekor qilish
                 </button>
               </form>

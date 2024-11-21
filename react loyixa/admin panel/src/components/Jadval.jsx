@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import Tashxis from "./Tashxis";
 
 function Jadval({ users, setDel, setName }) {
+  const [idTash, setIdTash] = useState(null);
+  const [modals, setModals] = useState(true);
   console.log(users);
   const [mod, setMod] = useState(true);
   const deleteUser = (id) => {
@@ -151,9 +153,15 @@ function Jadval({ users, setDel, setName }) {
 
                       <td className="w-[200px] flex flex-row gap-[7px] items-center">
                         <button
-                          onClick={() =>
-                            document.getElementById("my_modal_4").showModal()
-                          }
+                          onClick={() => {
+                            setModals(true);
+
+                            setTimeout(() => {
+                              document.getElementById("my_modal_4").showModal();
+                            }, 200);
+
+                            setIdTash(user.id);
+                          }}
                         >
                           <img src="./cret.svg" alt="" />
                         </button>
@@ -179,7 +187,7 @@ function Jadval({ users, setDel, setName }) {
                   );
                 })}
             </tbody>
-            <Tashxis />
+            {modals && <Tashxis idTash={idTash} setDel={setDel} setModals={setModals} />}
           </table>
         </div>
       </div>
