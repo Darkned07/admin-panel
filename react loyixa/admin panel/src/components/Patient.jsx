@@ -208,6 +208,8 @@ function Patient() {
               </div>
               <input
                 type="number"
+                name="number"
+                defaultValue={user && user.data.phone}
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>

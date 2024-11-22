@@ -17,9 +17,18 @@ function HomeComp() {
               <span className="text-[#fff] font-mono text-[50px] font-bold ">
                 25
               </span>
-              <img  className="w-[120px] ml-auto h-[120px]" src="./qabul.svg" alt="" />
+              <img
+                className="w-[120px] ml-auto h-[120px]"
+                src="./qabul.svg"
+                alt=""
+              />
             </div>
-            <Link className="rounded-b-[4px] bg-[#DC3545] w-full text-center text-[14px] font-semibold text-[#fff] py-[10px]" to={'/'}>Ko'proq</Link>
+            <Link
+              to={"/"}
+              className="rounded-b-[4px] bg-[#DC3545] w-full text-center text-[14px] font-semibold text-[#fff] py-[10px]"
+            >
+              Ko'proq
+            </Link>
           </li>
           <li className="flex flex-col gap-[2px] max-w-[330px] w-full bg-[#28A745] rounded-[8px] pt-[24px]">
             <h3 className="text-[#fff] pl-[24px] font-mono text-[20px] font-semibold">
@@ -29,9 +38,18 @@ function HomeComp() {
               <span className="text-[#fff] font-mono text-[50px] font-bold ">
                 25
               </span>
-              <img  className="w-[120px] ml-auto h-[120px]" src="./bemors.svg" alt="" />
+              <img
+                className="w-[120px] ml-auto h-[120px]"
+                src="./bemors.svg"
+                alt=""
+              />
             </div>
-            <Link className="rounded-b-[4px] bg-[#24963E] w-full text-center text-[14px] font-semibold text-[#fff] py-[10px]" to={'/'}>Ko'proq</Link>
+            <Link
+              to={"bemorlar"}
+              className="rounded-b-[4px] bg-[#24963E] w-full text-center text-[14px] font-semibold text-[#fff] py-[10px]"
+            >
+              Ko'proq
+            </Link>
           </li>
           <li className="flex flex-col gap-[2px] max-w-[330px] w-full bg-[#FFC107] rounded-[8px] pt-[24px]">
             <h3 className="text-[#fff] pl-[24px] font-mono text-[20px] font-semibold">
@@ -41,9 +59,18 @@ function HomeComp() {
               <span className="text-[#fff] font-mono text-[50px] font-bold ">
                 25
               </span>
-              <img  className="w-[120px] ml-auto h-[120px]" src="./maqsad.svg" alt="" />
+              <img
+                className="w-[120px] ml-auto h-[120px]"
+                src="./maqsad.svg"
+                alt=""
+              />
             </div>
-            <Link className="rounded-b-[4px] bg-[#E5AD06] w-full text-center text-[14px] font-semibold text-[#fff] py-[10px]" to={'/'}>Ko'proq</Link>
+            <Link
+              to={"/"}
+              className="rounded-b-[4px] bg-[#E5AD06] w-full text-center text-[14px] font-semibold text-[#fff] py-[10px]"
+            >
+              Ko'proq
+            </Link>
           </li>
         </ul>
       </div>

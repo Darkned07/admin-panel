@@ -17,7 +17,7 @@ function Modal({ setMod, setDel }) {
       .then((data) => {
         console.log(data);
         toast.success("Kasal bazaga saqlandi :)");
-        link("/");
+        link("/bemorlar");
         setDel(data);
         setMod(false);
       })
@@ -57,6 +57,7 @@ function Modal({ setMod, setDel }) {
               diseases,
               medical_history,
               medications,
+              birth_date,
             });
           } else {
             toast.error("Xatolik tug'ulgan sanani kiriting");
