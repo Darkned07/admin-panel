@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Modal from "./Modal";
 import toast from "react-hot-toast";
 import Tashxis from "./Tashxis";
 
 function Jadval({ users, setDel, setName }) {
+  
+
   const [idTash, setIdTash] = useState(null);
   const [modals, setModals] = useState(true);
   console.log(users);
@@ -187,7 +189,9 @@ function Jadval({ users, setDel, setName }) {
                   );
                 })}
             </tbody>
-            {modals && <Tashxis idTash={idTash} setDel={setDel} setModals={setModals} />}
+            {modals && (
+              <Tashxis idTash={idTash} setDel={setDel} setModals={setModals} />
+            )}
           </table>
         </div>
       </div>
