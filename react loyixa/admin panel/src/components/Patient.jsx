@@ -33,7 +33,7 @@ function Patient() {
 
   const updateUser = async (user) => {
     fetch("https://dad-urolog.uz/api/apiadmin/patient_view/" + id, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-type": "application/json",
       },
@@ -78,7 +78,6 @@ function Patient() {
       medical_history,
       medications,
     };
-
     updateUser(us);
   };
 
@@ -155,8 +154,9 @@ function Patient() {
               <input
                 type="text"
                 disabled={disabled}
-                name="last_name"
                 defaultValue={user && user.data.last_name}
+                name="last_name"
+
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>

@@ -5,6 +5,8 @@ function Header() {
   const lists = [
     { id: 1, name: "Bosh Sahifa", href: "/", img: "/home.svg" },
     { id: 2, name: "Bemorlar", href: "bemorlar", img: "/bemor.svg" },
+    { id: 3, name: "Qabulga yozilganlar", href: "qabul", img: "/bemor.svg" },
+    { id: 4, name: "Maqsadli bemorlar", href: "maqsad", img: "/bemor.svg" },
   ];
 
   return (
@@ -35,8 +37,14 @@ function Header() {
               <details className="collapse bg-[#3DACB9] mt-[30px]">
                 <summary className="collapse-title ">
                   <div className="flex flex-row gap-[10px] items-center">
-                  <img src="/dash.svg" alt="" className="p-[8px] bg-white rounded-[6px]" />
-                    <span className="font-semibold text-[#FAFAFA] font-mono text-[16px]">Dashboard</span>
+                    <img
+                      src="/dash.svg"
+                      alt=""
+                      className="p-[8px] bg-white rounded-[6px]"
+                    />
+                    <span className="font-semibold text-[#FAFAFA] font-mono text-[16px]">
+                      Dashboard
+                    </span>
                   </div>
                 </summary>
                 <div className="collapse-content">
