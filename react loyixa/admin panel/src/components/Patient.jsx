@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import TashxisMod from "./TashxisMod";
 
 function Patient() {
   const [user, setUser] = useState(null);
   const [diagnoz, setDiagnoz] = useState(null);
-  const { id } = useParams();
+  const { id, edit } = useParams();
+  const [del, setDel] = useState(null);
+  const [diagId, setDiagId] = useState(null);
+  const [crudTash, setCrudTash] = useState(null);
+
+  const [disabled, setDisabled] = useState("disabled");
+
   useEffect(() => {
     fetch("https://dad-urolog.uz/api/apiadmin/patient_view/" + id)
       .then((data) => data.json())
@@ -19,19 +27,90 @@ function Patient() {
       .then((data) => data.json())
       .then((data) => setDiagnoz(data))
       .catch((err) => console.log(err));
-  }, [id]);
+  }, [id, del]);
   diagnoz && console.log(diagnoz.diagnosis);
   user && console.log(user.data);
+
+  const updateUser = async (user) => {
+    fetch("https://dad-urolog.uz/api/apiadmin/patient_view/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        toast.success("Patient Malumotlari yangilandi :)");
+        console.log(data);
+        setDel(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(
+          "Internet yaxshi ishlamayabdi yoki baza bilan muammo chiqdi keyinroq urunib ko'ring!"
+        );
+      });
+  };
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+
+    const first_name = e.target.first_name.value;
+    const last_name = e.target.last_name.value;
+    const phone = e.target.phone.value;
+    const address = e.target.address.value;
+    const allergies = e.target.allergies.value;
+    const birth_date = e.target.birth_date.value;
+    const blood_group = e.target.blood_group.value;
+    const diseases = e.target.diseases.value;
+    const medical_history = e.target.medical_history.value;
+    const medications = e.target.medications.value;
+    const us = {
+      first_name,
+      last_name,
+      phone,
+      address,
+      birth_date,
+      allergies,
+      blood_group,
+      diseases,
+      medical_history,
+      medications,
+    };
+
+    updateUser(us);
+  };
+
+  const deleteDiagnoz = (idDiagnoz) => {
+    fetch("https://dad-urolog.uz/api/apiadmin/diagnosapi/" + idDiagnoz, {
+      method: "DELETE",
+      mode: "cors",
+    })
+      .then((data) => {
+        setDel(data);
+        toast.success("Diagnoz o'chirib yuborildi");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="flex w-full flex-col gap-[24px] mb-[10px]">
       <Navbar />
       <div className="flex flex-col gap-[16px] p-[16px] rounded-[16px] bg-[#fff]">
         <div className="flex flex-row items-center justify-between ">
-          <h2 className="text-[#000] font-mono text-[36px] font-semibold">
+          <h2 className="text-[#000] font-mono text-[24px] font-semibold">
             {user && user.data.first_name}
           </h2>
           <div className="flex flex-row gap-[8px]">
-            <button className="p-[5px] bg-[#0FED1E] rounded-[8px]">
+            <button
+              onClick={() => {
+                disabled === "disabled"
+                  ? setDisabled("")
+                  : setDisabled("disabled");
+              }}
+              className="p-[5px] bg-[#0FED1E] rounded-[8px]"
+            >
               <svg
                 width="21"
                 height="20"
@@ -45,123 +124,15 @@ function Patient() {
                 />
               </svg>
             </button>
-            <button className="p-[5px] bg-[#444] rounded-[8px] ">
-              <svg
-                width="21"
-                height="20"
-                viewBox="0 0 21 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.33331 17.5C5.87498 17.5 5.48262 17.3368 5.15623 17.0104C4.82984 16.684 4.66665 16.2917 4.66665 15.8333V5H3.83331V3.33333H7.99998V2.5H13V3.33333H17.1666V5H16.3333V15.8333C16.3333 16.2917 16.1701 16.684 15.8437 17.0104C15.5173 17.3368 15.125 17.5 14.6666 17.5H6.33331ZM14.6666 5H6.33331V15.8333H14.6666V5ZM7.99998 14.1667H9.66665V6.66667H7.99998V14.1667ZM11.3333 14.1667H13V6.66667H11.3333V14.1667Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
           </div>
         </div>
-        <div className="">
-          <div className="">
-            <table className="table">
-              <thead>
-                <tr className="border-[1px] border-[#E4E4E4] bg-[#F0F1F3] rounded-t-[8px] ">
-                  <th className="text-[#00000099] text-[14px] font-mono font-semibold ">
-                    №
-                  </th>
-                  <th className="text-[#00000099] text-[14px] font-mono font-semibold ">
-                    ID
-                  </th>
-                  <th className="text-[#00000099] text-[14px] font-mono font-semibold ">
-                    Ism
-                  </th>
-                  <th className="text-[#00000099] text-[14px] font-mono font-semibold ">
-                    Familiya
-                  </th>
-                  <th className="text-[#00000099] text-[14px] font-mono font-semibold ">
-                    Telefon
-                  </th>
-                  <th className="text-[#00000099] text-[14px] font-mono font-semibold ">
-                    Tug'ilgan sana
-                  </th>
-                  <th className="text-[#00000099] text-[14px] font-mono font-semibold ">
-                    Ro'yxatdan olingan
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-[1px] border-[#E4E4E4] bg-[#FFF] rounded-b-[8px]">
-                  <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                    1
-                  </td>
-                  <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                    {user && user.data.id}
-                  </td>
-                  <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                    {user && user.data.first_name}
-                  </td>
-                  <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                    {user && user.data.last_name}
-                  </td>
-                  <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                    {user && user.data.phone}
-                  </td>
-                  <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                    {user && user.data.birth_date}
-                  </td>
-                  <td className="flex flex-row gap-[8px]">
-                    <span className="text-[#292D32] font-mono text-[14px] font-semibold">
-                      {user && user.data.visit_date.slice(0, 10)}
-                    </span>
-                    <span className="text-[#1E40AD] font-mono text-[14px] font-semibold">
-                      {user && user.data.visit_date.slice(11, 16)}
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-[16px] p-[16px] rounded-[16px] bg-[#fff]">
-        <div className="flex flex-row items-center justify-between ">
-          <h2 className="text-[#000] font-mono text-[24px] font-semibold">
-            Bemor haqida
-          </h2>
-          <div className="flex flex-row gap-[8px]">
-            <button className="p-[5px] bg-[#0FED1E] rounded-[8px]">
-              <svg
-                width="21"
-                height="20"
-                viewBox="0 0 21 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.2594 5.73209L14.768 2.24146C14.6519 2.12536 14.5141 2.03326 14.3624 1.97042C14.2107 1.90759 14.0482 1.87524 13.884 1.87524C13.7198 1.87524 13.5572 1.90759 13.4056 1.97042C13.2539 2.03326 13.1161 2.12536 13 2.24146L3.36641 11.8751C3.24983 11.9907 3.15741 12.1284 3.09451 12.2801C3.0316 12.4318 2.99948 12.5944 3.00001 12.7586V16.2501C3.00001 16.5816 3.1317 16.8995 3.36612 17.1339C3.60054 17.3684 3.91849 17.5001 4.25001 17.5001H17.375C17.5408 17.5001 17.6997 17.4342 17.8169 17.317C17.9342 17.1998 18 17.0408 18 16.8751C18 16.7093 17.9342 16.5503 17.8169 16.4331C17.6997 16.3159 17.5408 16.2501 17.375 16.2501H9.50938L18.2594 7.50006C18.3755 7.38398 18.4676 7.24617 18.5304 7.09449C18.5933 6.94282 18.6256 6.78025 18.6256 6.61607C18.6256 6.45189 18.5933 6.28933 18.5304 6.13765C18.4676 5.98597 18.3755 5.84816 18.2594 5.73209ZM7.74141 16.2501H4.25001V12.7586L11.125 5.88365L14.6164 9.37506L7.74141 16.2501ZM15.5 8.49146L12.0094 5.00006L13.8844 3.12506L17.375 6.61646L15.5 8.49146Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
-            <button className="p-[5px] bg-[#444] rounded-[8px] ">
-              <svg
-                width="21"
-                height="20"
-                viewBox="0 0 21 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.33331 17.5C5.87498 17.5 5.48262 17.3368 5.15623 17.0104C4.82984 16.684 4.66665 16.2917 4.66665 15.8333V5H3.83331V3.33333H7.99998V2.5H13V3.33333H17.1666V5H16.3333V15.8333C16.3333 16.2917 16.1701 16.684 15.8437 17.0104C15.5173 17.3368 15.125 17.5 14.6666 17.5H6.33331ZM14.6666 5H6.33331V15.8333H14.6666V5ZM7.99998 14.1667H9.66665V6.66667H7.99998V14.1667ZM11.3333 14.1667H13V6.66667H11.3333V14.1667Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <form className="flex flex-col w-[970px]" action="">
-          <div className="flex flex-wrap gap-[16px] ">
-            <label className="form-control w-full max-w-[220px]">
+        <form
+          onSubmit={formSubmit}
+          className="flex flex-col items-center justify-center"
+          action=""
+        >
+          <div className="flex flex-row gap-[16px] ">
+            <label className="form-control w-[225px]">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Ism
@@ -169,12 +140,13 @@ function Patient() {
               </div>
               <input
                 name="first_name"
+                disabled={disabled}
                 defaultValue={user && user.data.first_name}
                 type="text"
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
-            <label className="form-control max-w-[220px] w-full">
+            <label className="form-control w-[225px] ">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Familiya
@@ -182,12 +154,13 @@ function Patient() {
               </div>
               <input
                 type="text"
+                disabled={disabled}
                 name="last_name"
                 defaultValue={user && user.data.last_name}
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
-            <label className="form-control max-w-[220px] w-full">
+            <label className="form-control w-[225px] ">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Tug'ilgan sana
@@ -195,12 +168,13 @@ function Patient() {
               </div>
               <input
                 type="text"
+                disabled={disabled}
                 defaultValue={user && user.data.birth_date}
                 name="birth_date"
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
-            <label className="form-control max-w-[240px] w-full">
+            <label className="form-control w-[240px] ">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Telefon Raqam
@@ -208,14 +182,15 @@ function Patient() {
               </div>
               <input
                 type="number"
-                name="number"
+                name="phone"
+                disabled={disabled}
                 defaultValue={user && user.data.phone}
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
           </div>
-          <div className="flex flex-wrap gap-[16px]">
-            <label className="form-control max-w-[135px] w-full">
+          <div className="flex flex-row gap-[16px]">
+            <label className="form-control w-[135px] ">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Qon gruppa
@@ -225,10 +200,11 @@ function Patient() {
                 defaultValue={user && user.data.blood_group}
                 type="text"
                 name="blood_group"
+                disabled={disabled}
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
-            <label className="form-control max-w-[400px] w-full">
+            <label className="form-control w-[400px]">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Kasalligi to’g’risida ma’lumot
@@ -236,12 +212,13 @@ function Patient() {
               </div>
               <input
                 type="text"
+                disabled={disabled}
                 defaultValue={user && user.data.medical_history}
                 name="medical_history"
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
-            <label className="form-control max-w-[400px] w-full">
+            <label className="form-control w-[400px] ">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Kasalning Manzili
@@ -251,38 +228,41 @@ function Patient() {
                 defaultValue={user && user.data.address}
                 name="address"
                 type="text"
+                disabled={disabled}
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
           </div>
-          <div className="flex flex-wrap gap-[16px]">
-            <label className="form-control max-w-[310px] w-full">
+          <div className="flex flex-row gap-[16px]">
+            <label className="form-control w-[310px]">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Kasalning tibbiy tarixi
                 </span>
               </div>
               <input
+                disabled={disabled}
                 type="text"
                 defaultValue={user && user.data.medications}
                 name="medications"
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
-            <label className="form-control max-w-[310px] w-full">
+            <label className="form-control w-[310px] ">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Kasalliklari
                 </span>
               </div>
               <input
+                disabled={disabled}
                 type="text"
                 name="diseases"
                 defaultValue={user && user.data.diseases}
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
-            <label className="form-control max-w-[310px] w-full">
+            <label className="form-control w-[310px] ">
               <div className="label">
                 <span className="text-[#000] font-mono text-[16px] font-semibold">
                   Alergiyalari
@@ -290,11 +270,21 @@ function Patient() {
               </div>
               <input
                 type="text"
+                disabled={disabled}
                 name="allergies"
                 defaultValue={user && user.data.allergies}
                 className="input input-sm  bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
+          </div>
+
+          <div className="flex items-end w-full justify-end">
+            <button
+              disabled={disabled}
+              className="text-[#FFF8F8] max-w-[100px] mt-[10px]  text-[14px] font-mono font-semibold py-[9px] px-[12px] rounded-[8px] bg-[#1E40AD]"
+            >
+              Saqlash
+            </button>
           </div>
         </form>
       </div>
@@ -303,40 +293,10 @@ function Patient() {
           <h2 className="text-[#000] font-mono text-[36px] font-semibold">
             Tashxislar
           </h2>
-          <div className="flex flex-row gap-[8px]">
-            <button className="p-[5px] bg-[#0FED1E] rounded-[8px]">
-              <svg
-                width="21"
-                height="20"
-                viewBox="0 0 21 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.2594 5.73209L14.768 2.24146C14.6519 2.12536 14.5141 2.03326 14.3624 1.97042C14.2107 1.90759 14.0482 1.87524 13.884 1.87524C13.7198 1.87524 13.5572 1.90759 13.4056 1.97042C13.2539 2.03326 13.1161 2.12536 13 2.24146L3.36641 11.8751C3.24983 11.9907 3.15741 12.1284 3.09451 12.2801C3.0316 12.4318 2.99948 12.5944 3.00001 12.7586V16.2501C3.00001 16.5816 3.1317 16.8995 3.36612 17.1339C3.60054 17.3684 3.91849 17.5001 4.25001 17.5001H17.375C17.5408 17.5001 17.6997 17.4342 17.8169 17.317C17.9342 17.1998 18 17.0408 18 16.8751C18 16.7093 17.9342 16.5503 17.8169 16.4331C17.6997 16.3159 17.5408 16.2501 17.375 16.2501H9.50938L18.2594 7.50006C18.3755 7.38398 18.4676 7.24617 18.5304 7.09449C18.5933 6.94282 18.6256 6.78025 18.6256 6.61607C18.6256 6.45189 18.5933 6.28933 18.5304 6.13765C18.4676 5.98597 18.3755 5.84816 18.2594 5.73209ZM7.74141 16.2501H4.25001V12.7586L11.125 5.88365L14.6164 9.37506L7.74141 16.2501ZM15.5 8.49146L12.0094 5.00006L13.8844 3.12506L17.375 6.61646L15.5 8.49146Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
-            <button className="p-[5px] bg-[#444] rounded-[8px] ">
-              <svg
-                width="21"
-                height="20"
-                viewBox="0 0 21 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.33331 17.5C5.87498 17.5 5.48262 17.3368 5.15623 17.0104C4.82984 16.684 4.66665 16.2917 4.66665 15.8333V5H3.83331V3.33333H7.99998V2.5H13V3.33333H17.1666V5H16.3333V15.8333C16.3333 16.2917 16.1701 16.684 15.8437 17.0104C15.5173 17.3368 15.125 17.5 14.6666 17.5H6.33331ZM14.6666 5H6.33331V15.8333H14.6666V5ZM7.99998 14.1667H9.66665V6.66667H7.99998V14.1667ZM11.3333 14.1667H13V6.66667H11.3333V14.1667Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
-          </div>
         </div>
         <div className="">
-          <div className="">
-            <table className="table">
+          <div className="razmer__jadval__2 overflow-x-auto">
+            <table className="table table-pin-rows">
               <thead>
                 <tr className="border-[1px] border-[#E4E4E4] bg-[#F0F1F3] rounded-t-[8px] ">
                   <th className="text-[#00000099] text-[14px] font-mono font-semibold ">
@@ -363,30 +323,45 @@ function Patient() {
                 {diagnoz &&
                   diagnoz.diagnosis.map((diag) => {
                     return (
-                      <tr className="border-[1px] border-[#E4E4E4] bg-[#FFF] rounded-b-[8px]">
+                      <tr
+                        key={diag.id}
+                        className="border-[1px] border-[#E4E4E4] bg-[#FFF] rounded-b-[8px]"
+                      >
                         <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
                           1
                         </td>
                         <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                         {diag.name}
+                          {diag.name}
                         </td>
                         <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                          {diag.complaints}
+                          {diag.complaints.slice(0, 20)}
                         </td>
                         <td className="text-[#292D32] font-mono text-[14px] font-semibold ">
-                          {diag.description}
+                          {diag.description.slice(0, 20)}
                         </td>
 
                         <td>
                           <span className="text-[#292D32] font-mono text-[14px] font-semibold mr-[5px]">
                             {diag.created_at}
                           </span>
-                          <span className="text-[#1E40AD] font-mono ml-[5px] text-[14px] font-semibold">
+                          {/* <span className="text-[#1E40AD] font-mono ml-[5px] text-[14px] font-semibold">
                             12:02
-                          </span>
+                          </span> */}
                         </td>
                         <td className="flex flex-row gap-[8px]">
-                          <button className="p-[5px] bg-[#0FED1E] rounded-[8px]">
+                          <button
+                            onClick={() => {
+                              setDiagId(diag.id);
+
+                              setCrudTash("edit");
+                              setTimeout(() => {
+                                document
+                                  .getElementById("my_modal_6")
+                                  .showModal();
+                              }, 100);
+                            }}
+                            className="p-[5px] bg-[#0FED1E] rounded-[8px]"
+                          >
                             <svg
                               width="21"
                               height="20"
@@ -400,7 +375,17 @@ function Patient() {
                               />
                             </svg>
                           </button>
-                          <button className="p-[5px] bg-[#288994] rounded-[8px]">
+                          <button
+                            onClick={() => {
+                              setDiagId(diag.id);
+                              setTimeout(() => {
+                                document
+                                  .getElementById("my_modal_6")
+                                  .showModal();
+                              }, 100);
+                            }}
+                            className="p-[5px] bg-[#288994] rounded-[8px]"
+                          >
                             <svg
                               width="21"
                               height="20"
@@ -414,7 +399,12 @@ function Patient() {
                               />
                             </svg>
                           </button>
-                          <button className="p-[5px] bg-[#444444] rounded-[8px]">
+                          <button
+                            onClick={() => {
+                              deleteDiagnoz(diag.id);
+                            }}
+                            className="p-[5px] bg-[#444444] rounded-[8px]"
+                          >
                             <svg
                               width="21"
                               height="20"
@@ -437,6 +427,13 @@ function Patient() {
           </div>
         </div>
       </div>
+
+      <TashxisMod
+        crud={crudTash}
+        diag={diagId}
+        setCrudTash={setCrudTash}
+        setDel={setDel}
+      />
     </div>
   );
 }

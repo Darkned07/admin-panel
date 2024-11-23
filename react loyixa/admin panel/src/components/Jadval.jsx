@@ -29,7 +29,7 @@ function Jadval({ users, setDel, setName }) {
   };
 
   return (
-    <div className=" flex flex-col gap-[18px]  mt-[16px] bg-[#FFF8F8] p-[16px] rounded-[16px]">
+    <div className=" flex flex-col gap-[18px] razmer__jadval mt-[16px] bg-[#FFF8F8] p-[16px] rounded-[16px]">
       {/* page boshi */}
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-[#000] font-mono text-[36px] font-semibold">
@@ -102,7 +102,7 @@ function Jadval({ users, setDel, setName }) {
 
       {/* jadval */}
       <div className="flex flex-col">
-        <div className="overflow-x-auto h-[450px] rounded-[8px] shadow-2xl">
+        <div className="overflow-x-auto razmer__jadval rounded-[8px] shadow-2xl">
           <table className="table table-pin-rows ">
             <thead className="">
               <tr className="bg-[#F0F1F3]  border-[1px] border-[#E4E4E4]">
@@ -167,7 +167,7 @@ function Jadval({ users, setDel, setName }) {
                         >
                           <img src="./cret.svg" alt="" />
                         </button>
-                        <Link to={`/edit/${user.id}`}>
+                        <Link to={`/patient/edit/${user.id}`}>
                           <img
                             className="p-[5px] bg-[#0FED1E] rounded-[8px]"
                             src="./edit.svg"

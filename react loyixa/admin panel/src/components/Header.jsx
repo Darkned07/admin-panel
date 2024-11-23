@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 function Header() {
   const lists = [
-    { id: 1, name: "Bosh Sahifa", href: "/", img: "./home.svg" },
-    { id: 2, name: "Bemorlar", href: "bemorlar", img: "./bemor.svg" },
+    { id: 1, name: "Bosh Sahifa", href: "/", img: "/home.svg" },
+    { id: 2, name: "Bemorlar", href: "bemorlar", img: "/bemor.svg" },
   ];
 
   return (
-    <div className="w-full h-[100%]">
+    <div className="w-full  h-[100vh]">
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content hidden  lg:flex flex-col items-center justify-center">
@@ -26,16 +26,16 @@ function Header() {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="menu bg-[#288994] rounded-[24px] text-base-content min-h-full w-80 p-4">
+          <div className="menu bg-[#288994] rounded-[24px] text-base-content razmer__header   p-4">
             <div>
               <Link to={"/"}>
-                <img src="./logo.svg" alt="" />
+                <img src="/logo.svg" alt="" />
               </Link>
               <hr className="w-full mt-[10px] border-[#0000001A]" />
               <details className="collapse bg-[#3DACB9] mt-[30px]">
                 <summary className="collapse-title ">
                   <div className="flex flex-row gap-[10px] items-center">
-                  <img src="./dash.svg" alt="" className="p-[8px] bg-white rounded-[6px]" />
+                  <img src="/dash.svg" alt="" className="p-[8px] bg-white rounded-[6px]" />
                     <span className="font-semibold text-[#FAFAFA] font-mono text-[16px]">Dashboard</span>
                   </div>
                 </summary>

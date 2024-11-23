@@ -8,7 +8,6 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import UserList from "./components/UserList";
 import Create from "./pages/Create";
-import Edit from "./pages/Edit";
 import Login from "./pages/Login";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Bemorlar from "./pages/Bemorlar";
@@ -36,8 +35,8 @@ function App() {
           element: <Create />,
         },
         {
-          path: "/edit/:id",
-          element: <Edit />,
+          path: "/patient/:edit/:id",
+          element: <Patient/>
         },
         {
           path: "bemorlar",

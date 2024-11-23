@@ -1,48 +1,43 @@
-import React from "react";
-import toast from "react-hot-toast";
+import React, { useEffect, useState } from "react";
 
-function Tashxis({ idTash, setDel, setModals }) {
-  const url = "https://dad-urolog.uz/api/apiadmin/creatediagnos/";
-  const createDiagnos = (diagnoz) => {
-    fetch(url, {
-      method: "POST",
+function TashxisMod({ crud, diag, setCrudTash,setDel }) {
+  const [diagnoz, setDiagnoz] = useState(null);
+  useEffect(() => {
+    fetch("https://dad-urolog.uz/api/apiadmin/diagnosapi/" + diag)
+      .then((data) => data.json())
+      .then((data) => {
+        setDiagnoz(data);
+      })
+      .catch((err) => console.log(err));
+  }, [diag]);
+
+  const editForm = (malumot) => {
+    fetch("https://dad-urolog.uz/api/apiadmin/diagnosapi/" + diag, {
+      method: "PATCH",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(diagnoz),
+      body: JSON.stringify(malumot),
     })
       .then((data) => data.json())
       .then((data) => {
-        toast.success("Tashxis qo'yildi :)");
-        console.log(data);
         setDel(data);
-        setModals(false)
       })
       .catch((err) => console.log(err));
   };
 
-  const tashxisForm = (e) => {
+  const formSubmit = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const description = e.target.description.value;
     const complaints = e.target.complaints.value;
-    const patient_id = idTash;
 
-    if (name.length > 3) {
-      createDiagnos({
-        name,
-        description,
-        complaints,
-        patient_id,
-      });
-    } else {
-      toast.error("Tashxis nomi kiritilmadi!");
-    }
+    editForm({ name, complaints, description });
   };
 
   return (
     <div>
-      <dialog id="my_modal_4" className="modal">
+      <dialog id="my_modal_6" className="modal">
         <div className="modal-box">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
@@ -55,7 +50,8 @@ function Tashxis({ idTash, setDel, setModals }) {
           </h3>
           <hr className="w-full h-[1px] mt-[20px] bg-[#E4E4E4]" />
           <form
-            onSubmit={tashxisForm}
+          method="PATCH"
+            onSubmit={formSubmit}
             action=""
             className="flex flex-col gap-[10px]"
           >
@@ -67,7 +63,9 @@ function Tashxis({ idTash, setDel, setModals }) {
               </div>
               <input
                 type="text"
+                defaultValue={diagnoz && diagnoz.data.name}
                 name="name"
+                disabled={crud ? "" : "disabled"}
                 className="input input-bordered w-full max-w-full"
               />
             </label>
@@ -79,6 +77,8 @@ function Tashxis({ idTash, setDel, setModals }) {
               </div>
               <textarea
                 name="complaints"
+                disabled={crud ? "" : "disabled"}
+                defaultValue={diagnoz && diagnoz.data.complaints}
                 className="textarea textarea-bordered h-24"
               ></textarea>
             </label>
@@ -89,6 +89,8 @@ function Tashxis({ idTash, setDel, setModals }) {
                 </span>
               </div>
               <textarea
+                disabled={crud ? "" : "disabled"}
+                defaultValue={diagnoz && diagnoz.data.description}
                 name="description"
                 className="textarea textarea-bordered h-24"
               ></textarea>
@@ -96,18 +98,22 @@ function Tashxis({ idTash, setDel, setModals }) {
             <div className="flex flex-row items-center ml-auto gap-[5px]">
               <form method="dialog">
                 <button
+                  onClick={() => {
+                    setCrudTash(null);
+                  }}
                   className="py-[12px] px-[20px] rounded-[8px] bg-[#E0E0E0] text-[#565656] font-mono text-[16px] font-semibold "
                 >
                   Bekor qilish
                 </button>
               </form>
-
-              <button
-                className="py-[12px] px-[20px] rounded-[8px] bg-[#288994] text-[#FFF] font-mono font-semibold text-[16px]"
-                type="submit"
-              >
-                Saqlash
-              </button>
+              {crud && (
+                <button
+                  className="py-[12px] px-[20px] rounded-[8px] bg-[#288994] text-[#FFF] font-mono font-semibold text-[16px]"
+                  type="submit"
+                >
+                  Saqlash
+                </button>
+              )}
             </div>
           </form>
         </div>
@@ -116,4 +122,4 @@ function Tashxis({ idTash, setDel, setModals }) {
   );
 }
 
-export default Tashxis;
+export default TashxisMod;

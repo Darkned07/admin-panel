@@ -34,7 +34,7 @@ function Bemorlar() {
     }
   }, [del]);
   return (
-    <div className="lg:max-w-[1200px] lg:w-full">
+    <div className="">
       <Navbar />
       <Jadval users={users} setDel={setDel} setName={setName} />
     </div>
