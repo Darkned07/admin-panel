@@ -6,12 +6,12 @@ function Maqsad() {
   useEffect(() => {
     fetch("https://dad-urolog.uz/api/apiadmin/coldclients/")
       .then((data) => data.json())
-      .then((data) => setBook(data))
+      .then((data) => {
+        setBook(data)})
       .catch((err) => console.log(err));
   }, []);
-  console.log(book && book.data.coldclients);
 
-  console.log(book);
+
   return (
     <div>
       <Navbar />
