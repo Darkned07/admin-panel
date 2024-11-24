@@ -194,6 +194,7 @@ function Jadval({ users, setDel, setName }) {
             )}
           </table>
         </div>
+        
       </div>
     </div>
   );

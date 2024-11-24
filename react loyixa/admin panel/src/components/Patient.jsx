@@ -3,6 +3,8 @@ import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import TashxisMod from "./TashxisMod";
+import Tashxis from "./Tashxis";
+import QabulModal from "./QabulModal";
 
 function Patient() {
   const [user, setUser] = useState(null);
@@ -11,6 +13,8 @@ function Patient() {
   const [del, setDel] = useState(null);
   const [diagId, setDiagId] = useState(null);
   const [crudTash, setCrudTash] = useState(null);
+  const [modals, setModals] = useState(true);
+  const [mod, setMod] = useState(false);
 
   const [disabled, setDisabled] = useState("disabled");
 
@@ -27,6 +31,7 @@ function Patient() {
       .then((data) => data.json())
       .then((data) => setDiagnoz(data))
       .catch((err) => console.log(err));
+      setMod(false)
   }, [id, del]);
   diagnoz && console.log(diagnoz.diagnosis);
   user && console.log(user.data);
@@ -156,7 +161,6 @@ function Patient() {
                 disabled={disabled}
                 defaultValue={user && user.data.last_name}
                 name="last_name"
-
                 className="input input-sm bg-[#F4F4F4] border-[1px] border-[#DADADA] input-bordered w-full "
               />
             </label>
@@ -295,7 +299,7 @@ function Patient() {
           </h2>
         </div>
         <div className="">
-          <div className="razmer__jadval__2 overflow-x-auto">
+          <div className="razmer__jadval__2 overflow-x-auto border">
             <table className="table table-pin-rows">
               <thead>
                 <tr className="border-[1px] border-[#E4E4E4] bg-[#F0F1F3] rounded-t-[8px] ">
@@ -426,8 +430,33 @@ function Patient() {
             </table>
           </div>
         </div>
+        <div className="flex flex-row items-end justify-end gap-[16px] mt-[10px]">
+          <button
+            onClick={() => {
+              setModals(true);
+              setTimeout(() => {
+                document.getElementById("my_modal_4").showModal();
+              }, 100);
+            }}
+            className="py-[6px] px-[20px] bg-[#1E40AD] rounded-[8px] text-[#fff] font-mono text-[16px] font-semibold"
+          >
+            Yangi tashxis yozish
+          </button>
+          <button
+            onClick={() => {
+              setMod(true);
+              setTimeout(() => {
+                document.getElementById("my_modal_1").showModal();
+              }, 200);
+            }}
+            className="py-[6px] px-[20px] bg-[#288994] rounded-[8px] text-[#fff] font-mono text-[16px] font-semibold"
+          >
+            Qabulga olish
+          </button>
+        </div>
       </div>
-
+      {modals && <Tashxis idTash={id} setDel={setDel} setModals={setModals} />}
+      {mod && <QabulModal setMod={setMod} setDel={setDel} user={user} />}
       <TashxisMod
         crud={crudTash}
         diag={diagId}

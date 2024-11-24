@@ -1,4 +1,3 @@
-import React from "react";
 import toast from "react-hot-toast";
 
 function Tashxis({ idTash, setDel, setModals }) {

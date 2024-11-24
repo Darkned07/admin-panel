@@ -1,17 +1,64 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import QabulModal from "../components/QabulModal";
+import toast from "react-hot-toast";
 
 function Qabul() {
+  const [search, setSearch] = useState(null);
+  const [modal, setModal] = useState(false);
   const [doc, setDoc] = useState(null);
+  const [del, setDel] = useState(null);
   useEffect(() => {
     fetch("https://dad-urolog.uz/api/apiadmin/getbookings/")
       .then((data) => data.json())
       .then((data) => setDoc(data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [del]);
 
-  console.log(doc);
+  const sub = (data, i) => {
+    fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + i, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((data) => data.json())
+      .then((data) => setDel(data))
+      .catch((err) => console.log(err));
+  };
+
+  const statusSelect = (status, i) => {
+    sub({ status: status.target.value }, i);
+  };
+
+  const deletes = (i) => {
+    console.log(i);
+
+    fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + i, {
+      method: "DELETE",
+    })
+      .then((data) => {
+        setDel(data);
+        toast.success("O'chirib yuborildi");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // useEffect(() => {
+  //   fetch(
+  //     "https://dad-urolog.uz/api/apiadmin/search_patients/?search=" +
+  //       search +
+  //       "&method=booking"
+  //   )
+  //     .then((data) => data.json())
+  //     .then((data) => {
+  //       setDoc(data);
+  //       setDel(data);
+
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [search]);
 
   return (
     <div>
@@ -23,14 +70,40 @@ function Qabul() {
               Qabulga yozilganlar
             </h2>
             <div className="flex flex-row gap-[16px]">
+              <label className="input w-[350px] input-sm input-bordered flex items-center gap-2">
+                <input
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                  type="text"
+                  className="grow"
+                  placeholder="Search"
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </label>
               <input
                 type="date"
                 className="rounded-[8px] text-[14px] text-[#10101099] font-semibold font-mono  border-[1px] border-[#00000066] py-[9px] px-[14px] bg-[#DDD] "
               />
+
               <button
-                onClick={() =>
-                  document.getElementById("my_modal_1").showModal()
-                }
+                onClick={() => {
+                  setModal(true);
+                  setTimeout(() => {
+                    document.getElementById("my_modal_1").showModal();
+                  }, 300);
+                }}
                 className="py-[9px] px-[14px] bg-[#288994] flex flex-row items-center gap-[8px] rounded-[8px]"
               >
                 <svg
@@ -49,7 +122,8 @@ function Qabul() {
                   Qabulga yozish
                 </span>
               </button>
-              <QabulModal />
+
+              {modal && <QabulModal setModal={setModal} />}
             </div>
           </div>
           <div className="overflow-x-auto razmer__jadval rounded-[8px] shadow-2xl">
@@ -92,6 +166,9 @@ function Qabul() {
                         <td>{d.phone}</td>
                         <td>
                           <select
+                            onChange={(e) => {
+                              statusSelect(e, d.id);
+                            }}
                             name="status"
                             className={`  text-[14px] font-mono font-medium  rounded-[4px] px-[8px] py-[4px]  ${
                               d.status === "Kutilmoqda"
@@ -119,6 +196,9 @@ function Qabul() {
                         <td>{d.time}</td>
                         <td>{d.text}</td>
                         <td className="w-[200px]  flex flex-row gap-[7px] items-center">
+                          <button>
+                            <img src="./cret.svg" alt="" />
+                          </button>
                           <button
                             className="tooltip tooltip-left"
                             data-tip={d.comment}
@@ -166,7 +246,11 @@ function Qabul() {
                             )}
                           </button>
 
-                          <button>
+                          <button
+                            onClick={() => {
+                              deletes(d.id);
+                            }}
+                          >
                             <img src="/delete.svg" alt="" />
                           </button>
                         </td>
