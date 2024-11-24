@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import QabulModal from "../components/QabulModal";
 
 function Qabul() {
   const [doc, setDoc] = useState(null);
@@ -26,7 +27,12 @@ function Qabul() {
                 type="date"
                 className="rounded-[8px] text-[14px] text-[#10101099] font-semibold font-mono  border-[1px] border-[#00000066] py-[9px] px-[14px] bg-[#DDD] "
               />
-              <button className="py-[9px] px-[14px] bg-[#288994] flex flex-row items-center gap-[8px] rounded-[8px]">
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_1").showModal()
+                }
+                className="py-[9px] px-[14px] bg-[#288994] flex flex-row items-center gap-[8px] rounded-[8px]"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -43,6 +49,7 @@ function Qabul() {
                   Qabulga yozish
                 </span>
               </button>
+              <QabulModal />
             </div>
           </div>
           <div className="overflow-x-auto razmer__jadval rounded-[8px] shadow-2xl">
