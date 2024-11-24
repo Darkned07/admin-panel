@@ -48,7 +48,7 @@ function QabulModal({ setModal, user, setMod, setDel }) {
     const message = e.target.message.value;
 
     if (name.length > 3) {
-      if (phone.length > 11) {
+      if (phone.length > 8) {
         if (times) {
           setIsm(name);
           createUser({
@@ -98,6 +98,7 @@ function QabulModal({ setModal, user, setMod, setDel }) {
                     user ? user.data.first_name : "Jamshid botirov"
                   }`}
                   defaultValue={user && user.data.first_name}
+                  disabled={user ? "disabled" : ""}
                   className="input input-bordered w-full"
                 />
               </label>
@@ -110,8 +111,9 @@ function QabulModal({ setModal, user, setMod, setDel }) {
                 <input
                   type="number"
                   name="phone"
-                  placeholder="+998 123 45 67"
+                  placeholder={user && user.data.phone}
                   defaultValue={user && user.data.phone}
+                  disabled={user ? "disabled" : ""}
                   className="input input-bordered w-full"
                 />
               </label>
