@@ -7,10 +7,10 @@ function Maqsad() {
     fetch("https://dad-urolog.uz/api/apiadmin/coldclients/")
       .then((data) => data.json())
       .then((data) => {
-        setBook(data)})
+        setBook(data);
+      })
       .catch((err) => console.log(err));
   }, []);
-
 
   return (
     <div>
@@ -69,13 +69,13 @@ function Maqsad() {
               </thead>
               <tbody className="bg-white ">
                 {book &&
-                  book.data.coldclients.map((bok) => {
+                  book.data.coldclients.map((bok, index) => {
                     return (
                       <tr
                         key={bok.id}
                         className="border-[1px] border-[#E4E4E4]"
                       >
-                        <td>1</td>
+                        <td>{index + 1}</td>
                         <td>{bok.name}</td>
                         <td>{bok.phone}</td>
                         <td>

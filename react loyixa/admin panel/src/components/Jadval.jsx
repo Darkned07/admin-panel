@@ -134,10 +134,10 @@ function Jadval({ users, setDel, setName }) {
             </thead>
             <tbody className="bg-white ">
               {users &&
-                users.patients.map((user) => {
+                users.patients.map((user, index) => {
                   return (
                     <tr key={user.id} className="border-[1px] border-[#E4E4E4]">
-                      <td>{user.id}</td>
+                      <td>{index + 1}</td>
                       <td>{user.id}</td>
                       <td>{user.first_name}</td>
                       <td>{user.last_name}</td>
