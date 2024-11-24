@@ -3,7 +3,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -14,13 +14,19 @@ import Qabul from "./pages/Qabul";
 import Maqsad from "./pages/Maqsad";
 
 function App() {
-  const [user, setUsers] = useState(null);
-  const us = JSON.parse(localStorage.getItem("user"));
-  console.log(us);
+  const [user, setUsers] = useState(JSON.parse(localStorage.getItem("user")));
+
+  console.log(user);
+
   const route = createBrowserRouter([
     {
       path: "/",
-      element: <RootLayout />,
+
+      element: (
+        <ProtectedRoutes user={user}>
+          <RootLayout />
+        </ProtectedRoutes>
+      ),
       children: [
         {
           index: true,
@@ -50,7 +56,7 @@ function App() {
     },
     {
       path: "login",
-      element: us ? <Navigate to={"/"} /> : <Login setUsers={setUsers} />,
+      element: user ? <Navigate to={"/"} /> : <Login setUsers={setUsers} />,
     },
   ]);
 
