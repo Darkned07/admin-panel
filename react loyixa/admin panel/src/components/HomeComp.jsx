@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 function HomeComp() {
   return (
-    <div className="p-[16px] rounded-[16px]  w-full  bg-[#fff] mt-[24px] shadow-2xl">
+    <div className="py-[16px] px-[26px] rounded-[16px]  w-full  bg-[#fff] mt-[24px] shadow-2xl">
       <div className="flex flex-col gap-[20px]">
         <h2 className="text-[#000] text-[36px] font-mono font-semibold">
           Asosiy Sahifa
         </h2>
-        <ul className="flex flex-row gap-[16px] w-[1020px]">
+        <ul className="flex flex-row items-center justify-between">
           <li className="flex flex-col gap-[2px] max-w-[330px] w-full bg-[#DD4755] rounded-[8px] pt-[24px]">
             <h3 className="text-[#fff] pl-[24px] font-mono text-[20px] font-semibold">
               Qabulga yozilganlar
