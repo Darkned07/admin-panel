@@ -4,13 +4,14 @@ import Navbar from "../components/Navbar";
 function Maqsad() {
   const [book, setBook] = useState(null);
   useEffect(() => {
-    fetch("https://dad-urolog.uz/api/apiadmin/getbookings/")
+    fetch("https://dad-urolog.uz/api/apiadmin/coldclients/")
       .then((data) => data.json())
       .then((data) => setBook(data))
       .catch((err) => console.log(err));
   }, []);
-  console.log(book && book.bookings);
-  console.log(book)
+  console.log(book && book.data.coldclients);
+
+  console.log(book);
   return (
     <div>
       <Navbar />
@@ -56,6 +57,9 @@ function Maqsad() {
                     Sana
                   </th>
                   <th className="text-[14px] font-mono font-semibold text-[#00000099]">
+                    Vaqt
+                  </th>
+                  <th className="text-[14px] font-mono font-semibold text-[#00000099]">
                     Xabar
                   </th>
                   <th className="text-[14px] font-mono font-semibold text-[#00000099]">
@@ -65,7 +69,7 @@ function Maqsad() {
               </thead>
               <tbody className="bg-white ">
                 {book &&
-                  book.bookings.map((bok) => {
+                  book.data.coldclients.map((bok) => {
                     return (
                       <tr
                         key={bok.id}
@@ -103,6 +107,8 @@ function Maqsad() {
                         </td>
 
                         <td>{bok.date}</td>
+                        <td>{bok.time}</td>
+
                         <td>{bok.comment}</td>
 
                         <td className="w-[200px] flex flex-row gap-[7px] items-center">

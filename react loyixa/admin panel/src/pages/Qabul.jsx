@@ -4,12 +4,13 @@ import Navbar from "../components/Navbar";
 function Qabul() {
   const [doc, setDoc] = useState(null);
   useEffect(() => {
-    fetch("https://dad-urolog.uz/api/apiadmin/coldclients/")
+    fetch("https://dad-urolog.uz/api/apiadmin/getbookings/")
       .then((data) => data.json())
       .then((data) => setDoc(data))
       .catch((err) => console.log(err));
   }, []);
-  console.log(doc && doc.data.coldclients);
+  console.log(doc && doc.bookings);
+
   return (
     <div>
       <Navbar />
@@ -75,7 +76,7 @@ function Qabul() {
               </thead>
               <tbody className="bg-white ">
                 {doc &&
-                  doc.data.coldclients.map((d) => {
+                  doc.bookings.map((d) => {
                     return (
                       <tr key={d.id} className="border-[1px] border-[#E4E4E4]">
                         <td>1</td>

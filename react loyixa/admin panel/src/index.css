@@ -127,4 +127,21 @@
       height: 90px;
     }
   }
+  @media only screen and (min-width: 1700px) {
+    .razmer__header {
+      height: 100vh;
+      width: 430px;
+    }
+    .razmer__navbar {
+      width: 1230px;
+    }
+    .razmer__jadval {
+      width: 1230px;
+      height: 450px;
+    }
+
+    .razmer__jadval__2 {
+      height: 90px;
+    }
+  }
 }
