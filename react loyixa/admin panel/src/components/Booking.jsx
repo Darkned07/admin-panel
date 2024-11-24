@@ -10,6 +10,7 @@ function Booking({
   setSearch,
   modal,
   setDel,
+  setDate,
 }) {
   const [id, setId] = useState(null);
   const [dm, setDm] = useState(false);
@@ -45,6 +46,16 @@ function Booking({
                 </svg>
               </label>
               <input
+                name="date"
+                onChange={(e) => {
+                  setDate(
+                    e.target.value.slice(8, 10) +
+                      "." +
+                      e.target.value.slice(5, 7) +
+                      "." +
+                      e.target.value.slice(0, 4)
+                  );
+                }}
                 type="date"
                 className="rounded-[8px] text-[14px] text-[#10101099] font-semibold font-mono  border-[1px] border-[#00000066] py-[9px] px-[14px] bg-[#DDD] "
               />
@@ -152,7 +163,7 @@ function Booking({
                           <button
                             onClick={() => {
                               setId(d.id);
-                              setDm(true)
+                              setDm(true);
                               document.getElementById("my_modal_9").showModal();
                             }}
                           >

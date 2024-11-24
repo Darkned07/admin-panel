@@ -24,7 +24,7 @@ function HomeComp() {
               />
             </div>
             <Link
-              to={"/"}
+              to={"qabul"}
               className="rounded-b-[4px] bg-[#DC3545] w-full text-center text-[14px] font-semibold text-[#fff] py-[10px]"
             >
               Ko'proq
@@ -66,7 +66,7 @@ function HomeComp() {
               />
             </div>
             <Link
-              to={"/"}
+              to={"maqsad"}
               className="rounded-b-[4px] bg-[#E5AD06] w-full text-center text-[14px] font-semibold text-[#fff] py-[10px]"
             >
               Ko'proq

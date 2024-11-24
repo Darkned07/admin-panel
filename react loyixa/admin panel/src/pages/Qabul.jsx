@@ -8,7 +8,7 @@ function Qabul() {
   const [modal, setModal] = useState(false);
   const [doc, setDoc] = useState(null);
   const [del, setDel] = useState(null);
-  const [data, setData] = useState(null);
+  const [date, setDate] = useState(null);
 
   const url = "https://dad-urolog.uz/api/apiadmin/search_patients/?search=";
 
@@ -40,6 +40,18 @@ function Qabul() {
         .catch((err) => console.log(err));
     }
   }, [search]);
+
+  useEffect(() => {
+    if (date) {
+      fetch("https://dad-urolog.uz/api/apiadmin/getbookings/?date=" + date)
+        .then((data) => data.json())
+        .then((data) => {
+          setDoc(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [date]);
+
   const sub = (data, i) => {
     fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + i, {
       method: "PATCH",
@@ -87,6 +99,7 @@ function Qabul() {
           setSearch={setSearch}
           modal={modal}
           setDel={setDel}
+          setDate={setDate}
         />
       )}
     </div>
