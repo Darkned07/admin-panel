@@ -29,7 +29,9 @@ function QabulModal() {
       body: JSON.stringify(us),
     })
       .then((data) => data.json())
-      .then((data) => {console.log(data)})
+      .then((data) => {
+        console.log(data);
+      })
       .catch((err) => console.log(err));
   };
   console.log(time);
@@ -47,7 +49,7 @@ function QabulModal() {
           createUser({
             name,
             phone,
-            date: date +"T"+times + ":00",
+            date: date + "T" + times + ":00",
             message,
           });
         } else {
@@ -65,6 +67,12 @@ function QabulModal() {
     <div>
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
           <form
             method="POST"
             onSubmit={formSubmit}
