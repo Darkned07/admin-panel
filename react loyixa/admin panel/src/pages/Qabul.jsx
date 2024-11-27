@@ -53,7 +53,7 @@ function Qabul() {
   }, [date]);
 
   const sub = (data, i) => {
-    fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + i, {
+    fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + i + "/", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ function Qabul() {
   const deletes = (i) => {
     console.log(i);
 
-    fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + i, {
+    fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + i + "/", {
       method: "DELETE",
     })
       .then((data) => {
