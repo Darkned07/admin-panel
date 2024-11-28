@@ -34,6 +34,7 @@ function QabulModal({ setModal, user, setMod, setDel }) {
     })
       .then((data) => data.json())
       .then((data) => {
+        console.log(data)
         setXat(data);
         setXabar(2);
       })
