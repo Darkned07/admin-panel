@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-function TashxisMod({ crud, diag, setCrudTash,setDel }) {
+function TashxisMod({ crud, diag, setMols, setCrudTash, setDel }) {
   const [diagnoz, setDiagnoz] = useState(null);
   useEffect(() => {
-    fetch("https://dad-urolog.uz/api/apiadmin/diagnosapi/" + diag)
+    fetch("https://dad-urolog.uz/api/apiadmin/diagnosapi/" + diag + "/")
       .then((data) => data.json())
       .then((data) => {
         setDiagnoz(data);
@@ -12,7 +12,7 @@ function TashxisMod({ crud, diag, setCrudTash,setDel }) {
   }, [diag]);
 
   const editForm = (malumot) => {
-    fetch("https://dad-urolog.uz/api/apiadmin/diagnosapi/" + diag, {
+    fetch("https://dad-urolog.uz/api/apiadmin/diagnosapi/" + diag + "/", {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -21,7 +21,10 @@ function TashxisMod({ crud, diag, setCrudTash,setDel }) {
     })
       .then((data) => data.json())
       .then((data) => {
+        setMols(false);
+
         setDel(data);
+        console.log(data);
       })
       .catch((err) => console.log(err));
   };
@@ -50,7 +53,7 @@ function TashxisMod({ crud, diag, setCrudTash,setDel }) {
           </h3>
           <hr className="w-full h-[1px] mt-[20px] bg-[#E4E4E4]" />
           <form
-          method="PATCH"
+            method="PATCH"
             onSubmit={formSubmit}
             action=""
             className="flex flex-col gap-[10px]"

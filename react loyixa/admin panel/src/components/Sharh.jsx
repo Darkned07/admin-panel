@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 function Sharh({ id, setDel, setDm }) {
   const subject = (data) => {
-    fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + id, {
+    fetch("https://dad-urolog.uz/api/apiadmin/bookinedit/" + id + "/", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ function Sharh({ id, setDel, setDm }) {
 
   const formSubmit = (e) => {
     e.preventDefault();
-    const comment = e.target.value;
+    const comment = e.target.sharx.value;
     subject({ comment });
   };
   return (

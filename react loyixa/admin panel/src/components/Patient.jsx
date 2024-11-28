@@ -15,6 +15,7 @@ function Patient() {
   const [crudTash, setCrudTash] = useState(null);
   const [modals, setModals] = useState(true);
   const [mod, setMod] = useState(false);
+  const [mols, setMols] = useState(false);
 
   const [disabled, setDisabled] = useState("disabled");
 
@@ -31,7 +32,7 @@ function Patient() {
       .then((data) => data.json())
       .then((data) => setDiagnoz(data))
       .catch((err) => console.log(err));
-      setMod(false)
+    setMod(false);
   }, [id, del]);
   diagnoz && console.log(diagnoz.diagnosis);
   user && console.log(user.data);
@@ -358,6 +359,7 @@ function Patient() {
                               setDiagId(diag.id);
 
                               setCrudTash("edit");
+                              setMols(true);
                               setTimeout(() => {
                                 document
                                   .getElementById("my_modal_6")
@@ -382,6 +384,7 @@ function Patient() {
                           <button
                             onClick={() => {
                               setDiagId(diag.id);
+                              setMols(true);
                               setTimeout(() => {
                                 document
                                   .getElementById("my_modal_6")
@@ -457,12 +460,15 @@ function Patient() {
       </div>
       {modals && <Tashxis idTash={id} setDel={setDel} setModals={setModals} />}
       {mod && <QabulModal setMod={setMod} setDel={setDel} user={user} />}
-      <TashxisMod
-        crud={crudTash}
-        diag={diagId}
-        setCrudTash={setCrudTash}
-        setDel={setDel}
-      />
+      {mols && (
+        <TashxisMod
+          crud={crudTash}
+          diag={diagId}
+          setCrudTash={setCrudTash}
+          setDel={setDel}
+          setMols={setMols}
+        />
+      )}
     </div>
   );
 }

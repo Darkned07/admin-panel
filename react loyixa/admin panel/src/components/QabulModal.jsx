@@ -42,13 +42,13 @@ function QabulModal({ setModal, user, setMod, setDel }) {
   const formSubmit = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    const phone = "+" + e.target.phone.value;
+    const phone = e.target.phone.value;
     const date = e.target.date.value;
     const times = e.target.time && e.target.time.value;
     const message = e.target.message.value;
 
     if (name.length > 3) {
-      if (phone.length > 8) {
+      if (phone.length >= 8) {
         if (times) {
           setIsm(name);
           createUser({
@@ -109,7 +109,7 @@ function QabulModal({ setModal, user, setMod, setDel }) {
                   </span>
                 </div>
                 <input
-                  type="number"
+                  type="text"
                   name="phone"
                   placeholder={user && user.data.phone}
                   defaultValue={user && user.data.phone}
